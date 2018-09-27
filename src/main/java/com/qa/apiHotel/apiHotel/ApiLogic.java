@@ -2,6 +2,8 @@ package com.qa.apiHotel.apiHotel;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -15,7 +17,6 @@ import static org.hamcrest.Matchers.equalTo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 public class ApiLogic
 {
 	public void PostTo()
@@ -62,7 +63,7 @@ public class ApiLogic
 		
 	}
 	
-	public void NestedStuff()
+	public void NestedStuff() throws ParseException
 	{
 		// First set the url for the request
 		RestAssured.baseURI = Constants.URL2;
@@ -97,10 +98,39 @@ public class ApiLogic
 		request.body(main.toString());
 		
 		
-		
 		System.out.println(main.toString());
 		// now to make a response from the request
 		Response response = request.put("");
+		JSONParser parser = new JSONParser();
+		JSONObject objec = (JSONObject)parser.parse(response.body().asString());
+		
+		
+		
+		for (Object key : objec.keySet()) {
+	        //based on you key types
+	        String keyStr = (String)key;
+	        Object keyvalue = objec.get(keyStr);
+
+	        //Print key and value
+	        System.out.println("key: "+ keyStr + " value: " + keyvalue);
+
+	        //for nested objects iteration if required
+	        if (keyvalue instanceof JSONObject)
+	            System.out.println(((JSONObject)keyvalue));
+
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		System.out.println(response.getStatusCode());
 		System.out.println(response.asString());

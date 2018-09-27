@@ -1,6 +1,7 @@
 package com.qa.apiHotel.apiHotel;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
 import cucumber.api.java.en.Given;
@@ -16,7 +17,7 @@ public class StepTest
 	JSONObject jsonobj;
 	Response response;
 	@Test
-	public void RunTest()
+	public void RunTest() throws ParseException
 	{
 		ApiLogic logic = new ApiLogic();
 		logic.NestedStuff();
